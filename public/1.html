@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Command Execution</title>
+</head>
+<body>
+    <textarea id="output" rows="10" cols="50"></textarea>
+    <input id="command" type="text" placeholder="Enter command">
+    <button onclick="sendCommand()">Execute Command</button>
+
+    <script>
+        const websocket = new WebSocket("ws://192.168.0.10:8000/ws/1");
+
+        websocket.onmessage = (event) => {
+            // 接收来自服务器的消息并显示在 textarea 中
+            document.getElementById("output").value = event.data;
+        };
+
+        function sendCommand() {
+            // 从输入框获取命令并发送到服务器
+            const command = document.getElementById("command").value;
+            websocket.send(command);
+        }
+    </script>
+</body>
+</html>
